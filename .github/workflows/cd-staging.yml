@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Pull Python 3.10 image
+        run: docker pull python:3.10
+            
       - name: Execute deployment command
         uses: appleboy/ssh-action@v1.0.3
         env:
@@ -27,6 +30,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
           envs: APP_STG_PATH, GIT_URL, APP_STG_PORT, MINIO_STG_ENDPOINT, MINIO_STG_ACCESS_KEY, MINIO_STG_SECRET_KEY
           script: |
+
+            sudo docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
 
             if [[ -d "${APP_STG_PATH}" ]]; then 
               cd $APP_STG_PATH
