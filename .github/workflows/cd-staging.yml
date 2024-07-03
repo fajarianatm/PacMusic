@@ -17,12 +17,12 @@ jobs:
       - name: Execute deployment command
         uses: appleboy/ssh-action@v1.0.3
         env:
-          APP_STG_PATH: ${{ vars.APP_STG_PATH }}
-          GIT_URL: ${{ secrets.GIT_URL }}
-          APP_STG_PORT: ${{ secrets.APP_STG_PORT}}
-          MINIO_STG_ENDPOINT: ${{ secrets.MINIO_STG_ENDPOINT}}
-          MINIO_STG_ACCESS_KEY: ${{ secrets.MINIO_STG_ACCESS_KEY}}
-          MINIO_STG_SECRET_KEY: ${{ secrets.MINIO_STG_SECRET_KEY}}
+          APP_STG_PATH: "home/ubuntu/staging"
+          GIT_URL: "git@github.com:fajarianatm/PacMusic.git"
+          APP_STG_PORT: "5001"
+          MINIO_STG_ENDPOINT: "api-stg.minio-devops-class.pacmann.ai"
+          MINIO_STG_ACCESS_KEY: "L8TO4LudnGJyMCWQ4F6Y"
+          MINIO_STG_SECRET_KEY: "qGcII3Qb2cAUJTYhsoKztY4NE2wNV0GTdkn3zKLJ"
 
         with:
           host: ${{ secrets.SSH_HOST_STAGING }}
