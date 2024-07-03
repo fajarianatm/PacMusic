@@ -1,0 +1,37 @@
+# Workflow ini akan melakukan build dan testing terhadap development app.
+name: Dev Testing 🔎 
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-testing:
+    name: Build and Testing
+    runs-on: ubuntu-latest
+    environment: dev-testing
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Create .env file
+        run: |
+          echo "MINIO_DEV_ENDPOINT=${{ secrets.MINIO_DEV_ENDPOINT }}" > .env
+          echo "MINIO_DEV_ACCESS_KEY=${{ secrets.MINIO_DEV_ACCESS_KEY }}" >> .env
+          echo "MINIO_DEV_SECRET_KEY=${{ secrets.MINIO_DEV_SECRET_KEY }}" >> .env
+
+      - name: Start application
+        run: |
+          sudo docker compose up --build --detach pacmusic-dev
+
+      - name: Hit Endpoint
+        run: |
+          sleep 20
+          curl http://localhost:5000
+          
+      - name: Install testing requirements
+        run: pip install -r test/requirements.txt
+      
+      - name: Run tests
+        run: python3 test/test.py
