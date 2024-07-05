@@ -6,7 +6,7 @@ on:
       - '*'
 
 jobs:
-  push-image-to-registry:
+  build-push:
     name: Push Image To Container Registry 🛒
     runs-on: ubuntu-latest
 
@@ -14,7 +14,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Login to DockerHub
+      - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -23,7 +23,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       
-      - name: Build and push Docker images
+      - name: Push current & latest app
         uses: docker/build-push-action@v5
         with:
           context: ./app
