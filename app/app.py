@@ -8,9 +8,9 @@ app = Flask(__name__)
 
 # Setup MinIO client using environment variables
 minioClient = Minio(
-    endpoint ="api-stg.minio-devops-class.pacmann.ai",
-    access_key ="L8TO4LudnGJyMCWQ4F6Y",
-    secret_key ="qGcII3Qb2cAUJTYhsoKztY4NE2wNV0GTdkn3zKLJ"
+    endpoint = os.getenv('MINIO_ENDPOINT'),
+    access_key = os.getenv('MINIO_ACCESS_KEY'),
+    secret_key =os.getenv('MINIO_SECRET_KEY')
 )
 
 @app.route('/')
